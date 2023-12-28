@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "410974899654",
+    "project_id": "text-recogonition",
+    "storage_bucket": "text-recogonition.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410974899654:android:c323601d927fd76ce0b6c7",
+        "android_client_info": {
+          "package_name": "com.example.text_recogonition"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDByW9FyCSSIE4xPGD_e5uHosZlJadNz0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
