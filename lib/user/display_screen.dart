@@ -39,19 +39,19 @@ class _DisplayScreenState extends State<DisplayScreen> {
                 onPressed: () async {
                   String data = widget.text;
                   String url = widget.imagePath;
-        
+
                   User? user = FirebaseAuth.instance.currentUser;
-        
+
                   if (user != null) {
                     String uid = user.uid;
                     int date = DateTime.now().millisecondsSinceEpoch;
-        
+
                     DatabaseReference companyRef =
                         FirebaseDatabase.instance.reference().child('data');
-        
+
                     String? id = companyRef.push().key;
-        
-                    await companyRef.child(id!).set({
+
+                    await companyRef.child(uid).set({
                       'id': id,
                       'photoUrl': url,
                       'data': data,
@@ -68,6 +68,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
     );
   }
 }
+
 void showAlertDialog(BuildContext context) {
   Widget remindButton = TextButton(
     style: TextButton.styleFrom(

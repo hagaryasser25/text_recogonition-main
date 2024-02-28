@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:text_recogonition/admin/admin_data.dart';
+import 'package:text_recogonition/admin/admin_students.dart';
 import 'package:text_recogonition/home.dart';
 import 'package:text_recogonition/user/open_screen.dart';
 
@@ -20,7 +21,11 @@ class _AdminHomeState extends State<AdminHome> {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (context, child) => Scaffold(
+        
         appBar: AppBar(
+          iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
           title: Center(child: Text("Home")),
           backgroundColor: Color.fromARGB(255, 142, 145, 231),
         ),
@@ -39,9 +44,9 @@ class _AdminHomeState extends State<AdminHome> {
                 children: [
                   InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, AdminData.routeName);
+                        Navigator.pushNamed(context, AdminStudents.routeName);
                       },
-                      child: card('assets/images/data.png', "students data")),
+                      child: card('assets/images/data.png', "students")),
                   SizedBox(
                     width: 15.w,
                   ),

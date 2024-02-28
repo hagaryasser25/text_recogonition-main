@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:gtext/gtext.dart';
 import 'package:text_recogonition/admin/admin_data.dart';
 import 'package:text_recogonition/admin/admin_home.dart';
+import 'package:text_recogonition/admin/admin_students.dart';
 import 'package:text_recogonition/auth/admin_login.dart';
 import 'package:text_recogonition/auth/welcome_screen.dart';
 import 'package:text_recogonition/home.dart';
 import 'package:text_recogonition/user/display_screen.dart';
 import 'package:text_recogonition/user/open_screen.dart';
 import 'package:text_recogonition/user/translate_screen.dart';
+import 'package:text_recogonition/user/user_data.dart';
 import 'package:text_recogonition/user/user_home.dart';
 import 'package:translator/translator.dart';
-
 
 import 'auth/login_screen.dart';
 import 'auth/signup_screen.dart';
@@ -20,7 +21,7 @@ import 'auth/signup_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  
+
   runApp(const MyApp());
 }
 
@@ -61,7 +62,8 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         AdminLogin.routeName: (context) => AdminLogin(),
         AdminHome.routeName: (context) => AdminHome(),
-        AdminData.routeName: (context) => AdminData(),
+        UserData.routeName: (context) => UserData(),
+        AdminStudents.routeName: (context) => AdminStudents(),
         SignUpScreen.id: (context) => SignUpScreen(),
         WelcomeScreen.id: (context) => WelcomeScreen(),
         HomePage.routeName: (context) => HomePage(),

@@ -5,8 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:text_recogonition/models/data_model.dart';
 
 class AdminData extends StatefulWidget {
+  String uid;
   static const routeName = '/admin-data';
-  const AdminData({super.key});
+  AdminData({required this.uid});
 
   @override
   State<AdminData> createState() => _AdminDataState();
@@ -29,7 +30,7 @@ class _AdminDataState extends State<AdminData> {
   void fetchData() async {
     app = await Firebase.initializeApp();
     database = FirebaseDatabase(app: app);
-    base = database.reference().child("data");
+    base = database.reference().child("data").child("${widget.uid}");
     base.onChildAdded.listen((event) {
       print(event.snapshot.value);
       Data p = Data.fromJson(event.snapshot.value);
@@ -50,62 +51,55 @@ class _AdminDataState extends State<AdminData> {
           backgroundColor: Color.fromARGB(255, 142, 145, 231),
         ),
         body: Padding(
-                padding:  EdgeInsets.only(
-                  top: 15.h,
-                  right: 10.w,
-                  left: 10.w,
+          padding: EdgeInsets.only(
+            top: 15.h,
+            right: 10.w,
+            left: 10.w,
+          ),
+          child: ListView.builder(
+            itemCount: dataList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
-                child: ListView.builder(
-                  itemCount: dataList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, right: 15, left: 15, bottom: 10),
+                    child: Column(children: [
+                      Image.network(
+                        height: 100,
+                        '${dataList[index].photoUrl}',
+                        fit: BoxFit.fill,
                       ),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, right: 15, left: 15, bottom: 10),
-                          child: Column(children: [
-                            Image.network(
-                              height: 100,
-                                        '${dataList[index].photoUrl}',
-                                        fit: BoxFit.fill,
-                                      ),
-                            Align(
-                                alignment: Alignment.topRight,
-                                child: Text(
-                                  'student data : ${dataList[index].data.toString()}',
-                                  style: TextStyle(fontSize: 17),
-                                )),
-                         
-                          
-                                InkWell(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              super.widget));
-                                  base
-                                      .child(dataList[index].id.toString())
-                                      .remove();
-                              },
-                              child: Icon(Icons.delete,
-                                  color: Color.fromARGB(255, 122, 122, 122)),
-                            )
-                          ]),
-                        ),
-                      ),
-                    );
-                  },
+                      Align(
+                          alignment: Alignment.topRight,
+                          child: Text(
+                            'student data : ${dataList[index].data.toString()}',
+                            style: TextStyle(fontSize: 17),
+                          )),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      super.widget));
+                          base.child(dataList[index].id.toString()).remove();
+                        },
+                        child: Icon(Icons.delete,
+                            color: Color.fromARGB(255, 122, 122, 122)),
+                      )
+                    ]),
+                  ),
                 ),
-              ),
+              );
+            },
+          ),
+        ),
       ),
-       
     );
   }
 }
-
-

@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:text_recogonition/home.dart';
 import 'package:text_recogonition/user/open_screen.dart';
+import 'package:text_recogonition/user/user_data.dart';
 
 class UserHome extends StatefulWidget {
   static const routeName = '/tes';
@@ -14,14 +17,19 @@ class UserHome extends StatefulWidget {
 class _UserHomeState extends State<UserHome> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text("Home")),
-        backgroundColor: Color.fromARGB(255, 142, 145, 231),
-        actions: [
-          
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      builder: (context, child) => Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
+          title:
+              Center(child: Text("Home", style: TextStyle(color: Colors.white))),
+          backgroundColor: Color.fromARGB(255, 142, 145, 231),
+          actions: [
             //<-- SEE HERE
-             IconButton(
+            IconButton(
               icon: Center(
                 child: Icon(
                   Icons.logout,
@@ -54,35 +62,59 @@ class _UserHomeState extends State<UserHome> {
                     });
               },
             ),
-          
-        ],
-      ),
-      body: Column(
-        children: [
-          Image.asset("assets/images/home2.jpg"),
-          SizedBox(
-            height: 50,
-          ),
-          Center(
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 90,
-                  ),
-                  child: Text("add photo to scan it"),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.camera_alt, size: 30),
-                  onPressed: () {
-                    Navigator.pushNamed(context, HomePage.routeName);
-                  },
-                ),
-              ],
+          ],
+        ),
+        body: Column(
+          children: [
+            Image.asset("assets/images/home2.jpg"),
+            SizedBox(
+              height: 50,
             ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.only(
+                left: 20.w,
+                right: 20.w,
+              ),
+              child: Row(
+                children: [
+                  InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, UserData.routeName);
+                      },
+                      child: card('assets/images/data.png', "data")),
+                  SizedBox(
+                    width: 15.w,
+                  ),
+                  InkWell(
+                      onTap: () {
+                       Navigator.pushNamed(context, HomePage.routeName);
+                      },
+                      child: card('assets/images/scan.png', "scan photo")),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+Widget card(String url, String text) {
+  return Card(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    child: SizedBox(
+      width: 150.w,
+      height: 170.h,
+      child: Column(children: [
+        SizedBox(
+          height: 10.h,
+        ),
+        Container(width: 100.w, height: 100.h, child: Image.asset(url)),
+        SizedBox(height: 5),
+        Text(text, style: TextStyle(fontSize: 18, color: HexColor('#32486d')))
+      ]),
+    ),
+  );
 }
