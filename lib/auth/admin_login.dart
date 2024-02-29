@@ -78,83 +78,24 @@ class _AdminLoginState extends State<AdminLogin> {
                                 hintText: 'Password'),
                           ),
                         ),
-                        CustomBottomScreen(
-                          textButton: 'Login',
-                          heroTag: 'login_btn',
-                          question: 'Forgot password?',
-                          buttonPressed: () async {
-                            var email = emailController.text.trim();
-                            var password = passwordController.text.trim();
+                        ElevatedButton(
+                            onPressed: () async {
+                              var email = emailController.text.trim();
+                              var password = passwordController.text.trim();
 
-                            if (email.isEmpty || password.isEmpty) {
-                              MotionToast(
-                                      primaryColor: Colors.blue,
-                                      width: 300,
-                                      height: 50,
-                                      position: MotionToastPosition.center,
-                                      description:
-                                          Text("please fill all fields"))
-                                  .show(context);
-
-                              return;
-                            }
-  if (email != 'admin@gmail.com') {
-                                    MotionToast(
-                                            primaryColor: Colors.blue,
-                                            width: 300,
-                                            height: 50,
-                                            position:
-                                                MotionToastPosition.center,
-                                            description:
-                                                Text("wrong email or password"))
-                                        .show(context);
-
-                                    return;
-                                  }
-
-                                  if (password != '123456789') {
-                                    MotionToast(
-                                            primaryColor: Colors.blue,
-                                            width: 300,
-                                            height: 50,
-                                            position:
-                                                MotionToastPosition.center,
-                                            description:
-                                                Text("wrong email or password"))
-                                        .show(context);
-
-                                    return;
-                                  }
-
-                            ProgressDialog progressDialog = ProgressDialog(
-                                context,
-                                title: Text('Logging In'),
-                                message: Text('Please Wait'));
-                            progressDialog.show();
-
-                            try {
-                              FirebaseAuth auth = FirebaseAuth.instance;
-                              UserCredential userCredential =
-                                  await auth.signInWithEmailAndPassword(
-                                      email: email, password: password);
-
-                              if (userCredential.user != null) {
-                                progressDialog.dismiss();
-                                Navigator.pushNamed(context, AdminHome.routeName);
-                              }
-                            } on FirebaseAuthException catch (e) {
-                              progressDialog.dismiss();
-                              if (e.code == 'user-not-found') {
+                              if (email.isEmpty || password.isEmpty) {
                                 MotionToast(
                                         primaryColor: Colors.blue,
                                         width: 300,
                                         height: 50,
                                         position: MotionToastPosition.center,
-                                        description: Text("user not found"))
+                                        description:
+                                            Text("please fill all fields"))
                                     .show(context);
 
                                 return;
-                              } else if (e.code == 'wrong-password') {
+                              }
+                              if (email != 'admin@gmail.com') {
                                 MotionToast(
                                         primaryColor: Colors.blue,
                                         width: 300,
@@ -166,33 +107,75 @@ class _AdminLoginState extends State<AdminLogin> {
 
                                 return;
                               }
-                            } catch (e) {
-                              MotionToast(
-                                      primaryColor: Colors.blue,
-                                      width: 300,
-                                      height: 50,
-                                      position: MotionToastPosition.center,
-                                      description: Text("something went wrong"))
-                                  .show(context);
 
-                              progressDialog.dismiss();
-                            }
-                          },
-                          questionPressed: () {
-                            signUpAlert(
-                              onPressed: () async {
-                                await FirebaseAuth.instance
-                                    .sendPasswordResetEmail(email: _email);
-                              },
-                              title: 'RESET YOUR PASSWORD',
-                              desc:
-                                  'Click on the button to reset your password',
-                              btnText: 'Reset Now',
-                              context: context,
-                            ).show();
-                          },
-                        ),
-                        
+                              if (password != '123456789') {
+                                MotionToast(
+                                        primaryColor: Colors.blue,
+                                        width: 300,
+                                        height: 50,
+                                        position: MotionToastPosition.center,
+                                        description:
+                                            Text("wrong email or password"))
+                                    .show(context);
+
+                                return;
+                              }
+
+                              ProgressDialog progressDialog = ProgressDialog(
+                                  context,
+                                  title: Text('Logging In'),
+                                  message: Text('Please Wait'));
+                              progressDialog.show();
+
+                              try {
+                                FirebaseAuth auth = FirebaseAuth.instance;
+                                UserCredential userCredential =
+                                    await auth.signInWithEmailAndPassword(
+                                        email: email, password: password);
+
+                                if (userCredential.user != null) {
+                                  progressDialog.dismiss();
+                                  Navigator.pushNamed(
+                                      context, AdminHome.routeName);
+                                }
+                              } on FirebaseAuthException catch (e) {
+                                progressDialog.dismiss();
+                                if (e.code == 'user-not-found') {
+                                  MotionToast(
+                                          primaryColor: Colors.blue,
+                                          width: 300,
+                                          height: 50,
+                                          position: MotionToastPosition.center,
+                                          description: Text("user not found"))
+                                      .show(context);
+
+                                  return;
+                                } else if (e.code == 'wrong-password') {
+                                  MotionToast(
+                                          primaryColor: Colors.blue,
+                                          width: 300,
+                                          height: 50,
+                                          position: MotionToastPosition.center,
+                                          description:
+                                              Text("wrong email or password"))
+                                      .show(context);
+
+                                  return;
+                                }
+                              } catch (e) {
+                                MotionToast(
+                                        primaryColor: Colors.blue,
+                                        width: 300,
+                                        height: 50,
+                                        position: MotionToastPosition.center,
+                                        description:
+                                            Text("something went wrong"))
+                                    .show(context);
+
+                                progressDialog.dismiss();
+                              }
+                            },
+                            child: Text('Login'))
                       ],
                     ),
                   ),

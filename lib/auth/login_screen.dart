@@ -78,12 +78,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 hintText: 'Password'),
                           ),
                         ),
-                        CustomBottomScreen(
-                          textButton: 'Login',
-                          heroTag: 'login_btn',
-                          question: 'Forgot password?',
-                          buttonPressed: () async {
-                            var email = emailController.text.trim();
+                        ElevatedButton(
+                          onPressed: ()async{
+   var email = emailController.text.trim();
                             var password = passwordController.text.trim();
 
                             if (email.isEmpty || password.isEmpty) {
@@ -151,21 +148,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               progressDialog.dismiss();
                             }
-                          },
-                          questionPressed: () {
-                            signUpAlert(
-                              onPressed: () async {
-                                await FirebaseAuth.instance
-                                    .sendPasswordResetEmail(email: _email);
-                              },
-                              title: 'RESET YOUR PASSWORD',
-                              desc:
-                                  'Click on the button to reset your password',
-                              btnText: 'Reset Now',
-                              context: context,
-                            ).show();
-                          },
-                        ),
+                          }, 
+                          child: Text('Login')),
+                          
+                       
                         TextButton(
                             onPressed: () {
                               Navigator.pushNamed(
