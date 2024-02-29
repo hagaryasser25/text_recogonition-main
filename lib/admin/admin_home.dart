@@ -46,7 +46,7 @@ class _AdminHomeState extends State<AdminHome> {
                       onTap: () {
                         Navigator.pushNamed(context, AdminStudents.routeName);
                       },
-                      child: card('assets/images/data.png', "students")),
+                      child: card('assets/images/data.png', "users")),
                   SizedBox(
                     width: 15.w,
                   ),

@@ -53,7 +53,7 @@ class _AdminStudentsState extends State<AdminStudents> {
           iconTheme: IconThemeData(
                   color: Colors.white, //change your color here
                 ),
-          title: Center(child: Text("Students Data", style: TextStyle(color: Colors.white),)),
+          title: Center(child: Text("Users Data", style: TextStyle(color: Colors.white),)),
           backgroundColor: Color.fromARGB(255, 142, 145, 231),
         ),
         body: ListView(

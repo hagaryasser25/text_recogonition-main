@@ -55,6 +55,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
                       'id': id,
                       'photoUrl': url,
                       'data': data,
+                      'uid': uid,
                     });
                   }
                   showAlertDialog(context);

@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:text_recogonition/models/data_model.dart';
 
-class AdminData extends StatefulWidget {
-  String uid;
+class Testt extends StatefulWidget {
   static const routeName = '/admin-data';
-  AdminData({required this.uid});
+  Testt({super.key, });
 
   @override
-  State<AdminData> createState() => _AdminDataState();
+  State<Testt> createState() => _TesttState();
 }
 
-class _AdminDataState extends State<AdminData> {
+class _TesttState extends State<Testt> {
   late DatabaseReference base;
   late FirebaseDatabase database;
   late FirebaseApp app;
@@ -31,14 +30,11 @@ class _AdminDataState extends State<AdminData> {
     app = await Firebase.initializeApp();
     database = FirebaseDatabase(app: app);
     base = database.reference().child("data");
-   base
-        .orderByChild("uid")
-        .equalTo("${widget.uid}")
-        .onChildAdded
-        .listen((event) {
+    base.onChildAdded.listen((event) {
       print(event.snapshot.value);
       Data p = Data.fromJson(event.snapshot.value);
       dataList.add(p);
+      print(dataList.length);
       keyslist.add(event.snapshot.key.toString());
       setState(() {});
     });
@@ -90,7 +86,7 @@ class _AdminDataState extends State<AdminData> {
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       super.widget));
-                          base.child(dataList[index].uid.toString()).remove();
+                          base.child(dataList[index].id.toString()).remove();
                         },
                         child: Icon(Icons.delete,
                             color: Color.fromARGB(255, 122, 122, 122)),
